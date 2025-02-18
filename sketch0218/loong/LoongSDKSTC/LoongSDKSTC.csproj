@@ -1,0 +1,773 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D96C0DE1-5B1F-460D-B98F-E7FDE7D11D71}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LoongCAD</RootNamespace>
+    <AssemblyName>LoongSDKSTC</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\loongstc_bin\Bin_Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
+    <DocumentationFile>..\..\loongstc_bin\Bin_Debug\LoongSDKSTC.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\loongstc_bin\Bin_Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
+    <DocumentationFile>..\..\loongstc_bin\Bin_Release\LoongSDKSTC.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugDMP|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\loongstc_bin\Bin_Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\loongstc_bin\Bin_Debug\Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Localization\Lang.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\CGrid\CGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CGrid\CGridCell.cs" />
+    <Compile Include="UI\CGrid\CGridCellButton.cs" />
+    <Compile Include="UI\CGrid\CGridCellCheck.cs" />
+    <Compile Include="UI\CGrid\CGridCellInputDouble.cs" />
+    <Compile Include="UI\CGrid\CGridCellInputDoubleArray.cs" />
+    <Compile Include="UI\CGrid\CGridCellInputInt.cs" />
+    <Compile Include="UI\CGrid\CGridCellInputIntArray.cs" />
+    <Compile Include="UI\CGrid\CGridCellInputLong.cs" />
+    <Compile Include="UI\CGrid\CGridCellInputText.cs" />
+    <Compile Include="UI\CGrid\CGridCellLabel.cs" />
+    <Compile Include="UI\CGrid\CGridCellType.cs" />
+    <Compile Include="UI\ComboBox\ComboItemCollection.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ComboBox\ImageComboBoxBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Composite\ParamPanelBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Composite\ParamPanelBase.Designer.cs">
+      <DependentUpon>ParamPanelBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Button\RadioButtonGroup.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Button\RadioButtonGroup.Designer.cs">
+      <DependentUpon>RadioButtonGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CheckBox\CheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ComboBox\ColorComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ComboBox\TextComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ComboBox\DateComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ComboBox\ComboItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ComboBox\ImageComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ComboBox\ComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\ComboBox\KeyValueComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Button\RadioButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Composite\ParamStoreBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Composite\ParamStoreBar.Designer.cs">
+      <DependentUpon>ParamStoreBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Composite\ParamInteractiveBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Composite\ParamInteractiveBar.Designer.cs">
+      <DependentUpon>ParamInteractiveBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Composite\Profile\ProfileManagerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Composite\Profile\ProfileManagerDialog.Designer.cs">
+      <DependentUpon>ProfileManagerDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Composite\Profile\Form_ProfileRuleProps.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Composite\Profile\Form_ProfileRuleProps.Designer.cs">
+      <DependentUpon>Form_ProfileRuleProps.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Composite\Profile\ProfileExplorerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Composite\Profile\ProfileExplorerDialog.Designer.cs">
+      <DependentUpon>ProfileExplorerDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Composite\Profile\ProfilePropsGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Composite\Profile\ProfileTipImage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Composite\Profile\ProfileTree\ProfileTree.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Composite\Profile\ProfileTree\ProfileTree_DynamicProfile.cs" />
+    <Compile Include="UI\Composite\Profile\ProfileTree\ProfileTree_Node.cs" />
+    <Compile Include="UI\Composite\Profile\ProfileTree\ProfileTree_Profile.cs" />
+    <Compile Include="UI\Composite\Profile\ProfileTree\ProfileTree_Rule.cs" />
+    <Compile Include="UI\Composite\Profile\ProfileTree\ProfileTree_Profile_Menu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Composite\Profile\ProfileTree\ProfileTree_Rule_Menu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Form\ParamFormGrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Form\ParamFormBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Input\InputBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Input\GuidInput.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Input\LookUpInput.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Input\LookUpInput.Designer.cs">
+      <DependentUpon>LookUpInput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Input\NumericUpDownInput.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Input\TextArrayInput.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Input\IntArrayInput.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Input\LongArrayInput.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Input\DoubleArrayInput.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Input\LongInput.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Input\IntInput.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Input\DoubleInput.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Input\TextInput.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\IPlaceholderCtrl.cs" />
+    <Compile Include="UI\ITabOrderCtrl.cs" />
+    <Compile Include="UI\IParamCtrl.cs" />
+    <Compile Include="UI\Menu\SubMenuBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Panel\TablePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Shape\LineShape.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Shape\LineShape.Designer.cs">
+      <DependentUpon>LineShape.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Panel\TabPanel\TabPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Panel\TabPanel\TabPanel.Designer.cs">
+      <DependentUpon>TabPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Panel\TabPanel\TabPanelPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{d6c03453-2d98-41ca-9261-bed21dd005fc}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IFWrapper\IFWrapper.vcxproj">
+      <Project>{aeb33142-50c7-4059-b39a-b19dd9c8bb56}</Project>
+      <Name>IFWrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LoongSDKCore\LoongSDKCore.csproj">
+      <Project>{a5c99e80-9a38-43ff-981b-f05afde3ff2d}</Project>
+      <Name>LoongSDKCore</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Button\RadioButtonGroup.resx">
+      <DependentUpon>RadioButtonGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Composite\ParamStoreBar.resx">
+      <DependentUpon>ParamStoreBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Composite\ParamInteractiveBar.resx">
+      <DependentUpon>ParamInteractiveBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Composite\Profile\ProfileManagerDialog.resx">
+      <DependentUpon>ProfileManagerDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Composite\Profile\Form_ProfileRuleProps.resx">
+      <DependentUpon>Form_ProfileRuleProps.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Composite\Profile\ProfileExplorerDialog.resx">
+      <DependentUpon>ProfileExplorerDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Form\ParamFormBase.resx">
+      <DependentUpon>ParamFormBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Input\LookUpInput.resx">
+      <DependentUpon>LookUpInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Shape\LineShape.resx">
+      <DependentUpon>LineShape.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\btn_check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\concave_chamfer_types_bottom_left_round.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\concave_chamfer_types_bottom_right_round.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\concave_chamfer_types_top_left_round.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\concave_chamfer_types_top_right_round.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\input_lookup.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\input_lookup_clear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UI\Grid\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\center_stiff_rib_pos.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\beam_port_fabtication_t1_b1_l1_r1_60x265.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\beam_web_slant_cut_t1_b1_l1_r1_83x111.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\beam_web_square_cut_t1_b1_l1_r1_83x111.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\bolt_group_dir_t1_b1_l1_r1_76x185.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\bolt_shape_alternate_permutation_t1_b1_l1_r1_81x220.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\bottom_under_board_t1_b1_l1_r1_72x176.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\center_stiff_rib_pos_t1_b1_l1_r1_69x231.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cut_beam_flange_down_pos_t1_b1_l1_r1_75x130.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cut_beam_flange_upper_pos_t1_b1_l1_r1_75x130.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\double_board_t1_b1_l1_r1_132x447.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\having_axillar_plate_t1_b1_l1_r1_171x404.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\having_notch_round_t1_b1_l1_r1_91x108.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\making_notch_shape_t1_b1_l1_r1_82x182.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\multi_stiff_rib_edge_shape_t1_b1_l1_r1_132x266.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\multi_stiff_rib_shape_t1_b1_l1_r1_95x324.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\multi_stiff_rib_t1_b1_l1_r1_95x321.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\muti_stiff_rib_dir_t1_b1_l1_r1_105x277.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\none_axillar_plate_t1_b1_l1_r1_171x404.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\none_notch_round_t1_b1_l1_r1_91x108.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\NoneBeamEndCut_t1_b1_l1_r1_81x149.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\notch_corner_line_t1_b1_l1_r1_91x144.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\notch_corner_radian_t1_b1_l1_r1_91x144.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\notch_corner_slant_t1_b1_l1_r1_91x144.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\notch_depth_flange_t1_b1_l1_r1_81x149.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\notch_depth_subcenter_edgeto__flange_t1_b1_l1_r1_81x149.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\notch_flange_both_side_t1_b1_l1_r1_77x182.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\notch_flange_center_to_flange_t1_b1_l1_r1_91x108.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\notch_flange_edge_to_flange_t1_b1_l1_r1_91x108.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\notch_flange_far_side_t1_b1_l1_r1_77x182.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\notch_flange_near_side _t1_b1_l1_r1_77x182.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\notch_flange_shape_basing_set_t1_b1_l1_r1_81x256.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\notch_flange_shape_bend_angle_t1_b1_l1_r1_81x256.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\notch_flange_shape_cut_aligned_flange_t1_b1_l1_r1_81x256.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\notch_flange_shape_cut_both_t1_b1_l1_r1_81x256.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\notch_flange_shape_none_t1_b1_l1_r1_81x256.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\notch_pos_over_flange_t1_b1_l1_r1_81x105.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\notch_pos_under_flange_t1_b1_l1_r1_81x105.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\parall_main_cut_flange_t1_b1_l1_r1_95x113.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\perpend_sub_cut_flange_t1_b1_l1_r1_95x113.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\shear_plane_direction_slant_t1_b1_l1_r1_87x146.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\shear_plane_direction_square_t1_b1_l1_r1_87x146.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\shear_plane_far_and_near_end_t1_b1_l1_r1_135x399.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\shear_plane_far_end_t1_b1_l1_r1_135x399.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\shear_plane_near_end_t1_b1_l1_r1_135x399.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\side_stiff_rib_pos_t1_b1_l1_r1_64x218.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\slant_cut_flange_t1_b1_l1_r1_80x111.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\SlantBeamEndCut_t1_b1_l1_r1_81x149.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\square_cut_flange_t1_b1_l1_r1_80x111.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\SquareBeamEndCut_t1_b1_l1_r1_81x149.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\steel_angle_stiff_rib_shape_t1_b1_l1_r1_68x189.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\stiff_rib_basing_shear_plane_t1_b1_l1_r1_73x487.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\stiff_rib_complete_t1_b1_l1_r1_73x487.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\stiff_rib_dir_parallel_t1_b1_l1_r1_77x125.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\stiff_rib_dir_perpendicular_t1_b1_l1_r1_77x125.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\stiff_rib_dir_uncomplete_t1_b1_l1_r1_77x125.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\stiff_rib_none_t1_b1_l1_r1_73x487.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\stiff_rib_uncomplete_t1_b1_l1_r1_73x487.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\sub_part_cut_t1_b1_l1_r1_107x177.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\support_angle_direction_type_t1_b1_l1_r1_68x289.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\support_steel_angle_pos_t1_b1_l1_r1_89x480.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\support_steel_angle_rotate_t1_b1_l1_r1_69x140.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\top_support_steel_angle_attach_type_t1_b1_l1_r1_156x420.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\top_under_board_type_t1_b1_l1_r1_72x173.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\under_beam_flange_cut_flange_t1_b1_l1_r1_92x131.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\under_beam_flange_cut_notch _t1_b1_l1_r1_92x131.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\under_board_length_t1_b1_l1_r1_82x107.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\weld_access_hole_shape_t1_b1_l1_r1_72x309.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\beam_end_cut_t1_b1_l1_r1_81x224.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\chamfer_types_bottom_left_line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\chamfer_types_bottom_left_none.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\chamfer_types_bottom_right_line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\chamfer_types_bottom_right_none.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\beam_end_flange_cut_t1_b1_l1_r1_80x111.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\beam_end_web_cut_t1_b1_l1_r1_83x111.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_shear_orientation_t1_b1_l1_r1_76x187.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_beam_end_cut_t1_b1_l1_r1_81x224.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_beam_end_flange_cut_t1_b1_l1_r1_80x111.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_beam_end_web_cut_t1_b1_l1_r1_83x111.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_shear_away_side_t1_b1_l1_r1_135x399.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_stiff_orientation_t1_b1_l1_r1_77x125.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_notch_chamfer_t1_b1_l1_r1_91x144.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_notch_depth_mode_t1_b1_l1_r1_81x149.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_notch_flange_cut_shape_t1_b1_l1_r1_95x113.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_notch_manual_shape_t1_b1_l1_r1_81x256.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_notch_manual_side_t1_b1_l1_r1_77x182.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_notch_position_t1_b1_l1_r1_81x105.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_notch_shape_t1_b1_l1_r1_82x182.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_notch_size_mode_t1_b1_l1_r1_91x108.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_notch_size_rounding_t1_b1_l1_r1_91x108.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\notch_rounding_horz_tips.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\notch_rounding_vert_tips.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\notch_size_horz_tips.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\notch_size_vert_tips.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_notch_manual_depth_mode_t1_b1_l1_r1_81x149.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\notch_manual_size_tips_t1_b1_l1_r1_124x117.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_bolt_orientation_t1_b1_l1_r1_76x185.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_bolt_shape_t1_b1_l1_r1_81x220.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_haunch_creation_t1_b1_l1_r1_171x404.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_multi_stiff_creation_t1_b1_l1_r1_95x321.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_multi_stiff_orientation_t1_b1_l1_r1_105x277.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_multi_stiff_shape_t1_b1_l1_r1_95x324.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_shear_bolt_orientation_t1_b1_l1_r1_76x185.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_beam_cut_access_hole_t1_b1_l1_r1_72x309.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_beam_cut_bottom_flange_cut_t1_b1_l1_r1_75x130.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_beam_cut_end_prepare_t1_b1_l1_r1_60x265.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_beam_cut_top_flange_cut_t1_b1_l1_r1_75x130.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_single_stiff_creation_t1_b1_l1_r1_73x487.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_single_stiff_orientation_t1_b1_l1_r1_77x125.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp_bolt_others.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp_both_others_size.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hole_size.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Snipaste_2023-02-21_16-14-23_t1_b1_l1_r1_112x159.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp_beam_backbar_over_dist.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_special_shear_orientation_t1_b1_l1_r1_87x146.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_chamfer_types_bottom_left_line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_chamfer_types_bottom_left_none.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_chamfer_types_bottom_right_line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_chamfer_types_bottom_right_none.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_chamfer_types_top_left_line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_chamfer_types_top_left_none.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_chamfer_types_top_right_line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_chamfer_types_top_right_none.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_concave_chamfer_types_bottom_left_line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_concave_chamfer_types_bottom_left_round.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_concave_chamfer_types_bottom_right_line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_concave_chamfer_types_bottom_right_round.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_concave_chamfer_types_top_left_line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_concave_chamfer_types_top_left_round.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_concave_chamfer_types_top_right_line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_concave_chamfer_types_top_right_round.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_convex_shear_orientation_t1_b1_l1_r1_87x146.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_shear_end_cut_t1_b1_l1_r1_77x125.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_double_plate_creation_t1_b1_l1_r1_132x447.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_double_plate_shape_t1_b1_l1_r1_132x266.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\comp_detail_pos_side_profile_view.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\comp_detail_pos_side_top_view.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_weld_contour.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_weld_edge_around.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_weld_finish.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_weld_type.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_chamfer_types_bottom_left_line_t1_b1_l1_r1_40x439.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_chamfer_types_bottom_right_line_t1_b1_l1_r1_40x439.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_chamfer_types_top_left_line_t1_b1_l1_r1_40x439.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comp\cbo_chamfer_types_top_right_line_t1_b1_l1_r1_40x438.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

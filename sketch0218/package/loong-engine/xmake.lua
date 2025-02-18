@@ -1,0 +1,21 @@
+package('loong-engine', function()
+  add_urls('ftp://admin:111111@build-server.d5next.com:41657/build/sketch/dependency/externals.zip')
+  add_versions('latest', 'bb0233d04376bda099370651c8fbb4889855294cd4372a1730c70c8b5e187073')
+
+  on_load(function(package)
+    import('core.project.config')
+    package:set('installdir', path.absolute(path.join(config.buildir(), '.packages', 'l', 'loong-engine')))
+    package:addenv('PATH', 'bin')
+  end)
+
+  add_includedirs('include')
+  add_includedirs('include/Engine/Libs/sparsehash-c11-master')
+
+  on_install('windows', function(package)
+    os.cp('loong_misc/bin/Release/*', package:installdir('bin'))
+    os.cp('loong/bin/Release/*', package:installdir('bin'))
+    os.cp('loong/include/*', package:installdir('include'))
+    os.cp('loong/lib/Release/*', package:installdir('lib'))
+    os.cp('oda/bin/Release/*', package:installdir('bin'))
+  end)
+end)

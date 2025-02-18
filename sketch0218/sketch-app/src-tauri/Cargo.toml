@@ -1,0 +1,48 @@
+[package]
+name = "nous"
+version = "0.0.0"
+description = "Nous App"
+authors = ["arno"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+tauri-build = { version = "2.0.0-rc", features = [] }
+xmake = "0.2.2"
+
+[dependencies]
+tauri = { version = "2.0.0-rc", features = [
+    "protocol-asset",
+    "macos-private-api",
+    "devtools",
+] }
+tauri-plugin-shell = "2.0.0-rc"
+tauri-plugin-dialog = "2.0.0-rc"
+tauri-plugin-store = "2.0.0-rc"
+tauri-plugin-clipboard-manager = "2.0.0-rc"
+tauri-plugin-os = "2.0.0-rc"
+tauri-plugin-cli = "2.0.0-rc"
+tauri-plugin-window-state = "2.0.0-rc"
+window-vibrancy = "0.5.0"
+widestring = "1.1.0"
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+log = "0.4"
+env_logger = "0.11"
+lazy_static = "1.5"
+crossbeam-channel = "0.5"
+# nous_rs = { path = "../../nous_rs" }
+actix-web = "4"
+tokio = { version = "1", features = ["rt-multi-thread"] }
+path-slash = "0.2"
+
+[target.'cfg(windows)'.dependencies]
+webview2-com = "0.33"
+windows = "0.58"
+winapi = { version = "0.3", features = ["wincon", "winuser"] }
+
+[features]
+# this feature is used for production builds or when `devPath` points to the filesystem
+# DO NOT REMOVE!!
+custom-protocol = ["tauri/custom-protocol"]

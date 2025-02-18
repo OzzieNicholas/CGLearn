@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{5908e881-bbe2-404b-b1a7-11d83271d081}</ProjectGuid>
+    <RootNamespace>Core</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>sketch</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>E:\GitRepository\sketch\externals\pcl\lib;$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);$(SolutionDir)..\externals\loong\lib\Debug;$(SolutionDir)..\externals\nous\lib\Debug;$(SolutionDir)..\externals\geos\lib\Debug</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(SolutionDir)..\externals\nous\lib\Release;$(SolutionDir)..\externals\loong\lib\Release;$(SolutionDir)..\externals\geos\lib\Release\;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnabled>false</VcpkgEnabled>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;CORE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;CORE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;NOMINMAX;CORE_DLL_EXPORTS;_WINDOWS;_USRDLL;EASTDC_USE_STANDARD_NEW=1;EASTL_OPENSOURCE=1;EASTL_STD_ITERATOR_CATEGORY_ENABLED=1;FMT_HEADER_ONLY;SIM_UI_INPUT;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>Default</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\externals\pcl\include;$(SolutionDir)..\externals\cdt\include;include;$(SolutionDir)..\externals\nous\include;$(SolutionDir)..\externals\loong\include;$(SolutionDir)..\externals\geos\include;$(SolutionDir)..\externals\nous\nous_base\third_party\EASTL\include;$(SolutionDir)..\externals\nous\nous_base\third_party\nameof\include;$(SolutionDir)..\externals\nous\nous_base\third_party\unordered_dense\include;$(SolutionDir)..\externals\nous\nous_base\third_party\EASTL\test\packages\EABase\include\Common;$(SolutionDir)..\externals\nous\nous_base\third_party\atomic;$(SolutionDir)..\externals\loong\include\Engine\Libs\sparsehash-c11-master;$(SolutionDir);$(ProjectDir)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalOptions>/utf-8 /wd4828 /bigobj %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>EASTL.lib;nous.lib;nous_mesh.lib;nous_base.lib;Engine.lib;V8Wrapper.lib;geos.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(OutDir)$(ProjectName).dll ..\..\loongstc_bin\bin_debug
+..\..\misc\hooks\install_hooks.bat</Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)..\misc\scripts\install_libs.ps1"</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;NOMINMAX;CORE_DLL_EXPORTS;_WINDOWS;_USRDLL;EASTDC_USE_STANDARD_NEW=1;EASTL_OPENSOURCE=1;EASTL_STD_ITERATOR_CATEGORY_ENABLED=1;FMT_HEADER_ONLY;SIM_UI_INPUT;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>Default</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\externals\cdt\include;include;$(SolutionDir)..\externals\nous\include;$(SolutionDir)..\externals\loong\include;$(SolutionDir)..\externals\nous\nous_base\third_party\EASTL\include;$(SolutionDir)..\externals\nous\nous_base\third_party\nameof\include;$(SolutionDir)..\externals\nous\nous_base\third_party\unordered_dense\include;$(SolutionDir)..\externals\nous\nous_base\third_party\EASTL\test\packages\EABase\include\Common;$(SolutionDir)..\externals\nous\nous_base\third_party\atomic;$(SolutionDir)..\externals\loong\include\Engine\Libs\sparsehash-c11-master;$(SolutionDir);$(ProjectDir);$(SolutionDir)..\externals\geos\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/utf-8 /wd4828 /bigobj %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>EASTL.lib;nous.lib;nous_mesh.lib;nous_base.lib;Engine.lib;V8Wrapper.lib;geos.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(OutDir)$(ProjectName).dll ..\..\loongstc_bin\bin_release
+..\..\misc\hooks\install_hooks.bat</Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)..\misc\scripts\install_libs.ps1"</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="include\sketch\Command\CmdManager.h" />
+    <ClInclude Include="include\sketch\Command\Command.h" />
+    <ClInclude Include="include\sketch\Command\Revertable\Revertable.h" />
+    <ClInclude Include="include\sketch\Command\Revertable\Revertable_End.h" />
+    <ClInclude Include="include\sketch\Command\Revertable\RvtBlock.h" />
+    <ClInclude Include="include\sketch\Command\Revertable\RvtPool.h" />
+    <ClInclude Include="include\sketch\Command\Revertable\Scene\Revertable_ObjectCreate.h" />
+    <ClInclude Include="include\sketch\Command\Revertable\Scene\Revertable_ObjectDelete.h" />
+    <ClInclude Include="include\sketch\Command\Revertable\Scene\Revertable_ObjectMatrixModify.h" />
+    <ClInclude Include="include\sketch\Command\Revertable\Scene\Revertable_ObjectModify.h" />
+    <ClInclude Include="include\sketch\Command\Revertable\Scene\Revertable_ObjectParentModify.h" />
+    <ClInclude Include="include\sketch\Command\Revertable\View\Revertable_View_Hide.h" />
+    <ClInclude Include="include\sketch\Common\EventPool.h" />
+    <ClInclude Include="include\sketch\Core.h" />
+    <ClInclude Include="include\sketch\Define.h" />
+    <ClInclude Include="include\sketch\Document\Configure\Color\ColorManager.h" />
+    <ClInclude Include="include\sketch\Document\Configure\ConfigureManager.h" />
+    <ClInclude Include="include\sketch\Document\Configure\History\HistoryManager.h" />
+    <ClInclude Include="include\sketch\Document\Configure\Layout\LayoutManager.h" />
+    <ClInclude Include="include\sketch\Document\Configure\Options.h" />
+    <ClInclude Include="include\sketch\Document\Configure\Pallete\Pallete.h" />
+    <ClInclude Include="include\sketch\Document\Configure\Pallete\PalleteManager.h" />
+    <ClInclude Include="include\sketch\Document\Configure\Settings.h" />
+    <ClInclude Include="include\sketch\Document\Configure\ShortCut\ShortCutManager.h" />
+    <ClInclude Include="include\sketch\Document\DocElement.h" />
+    <ClInclude Include="include\sketch\Document\DocListener.h" />
+    <ClInclude Include="include\sketch\Document\DocManager.h" />
+    <ClInclude Include="include\sketch\Document\Document.h" />
+    <ClInclude Include="include\sketch\Document\Scene\GroupDoc.h" />
+    <ClInclude Include="include\sketch\Document\Scene\LoadSceneHangUp.h" />
+    <ClInclude Include="include\sketch\Document\Scene\Mesh\MeshDoc.h" />
+    <ClInclude Include="include\sketch\Document\Scene\Mesh\NurbsDoc.h" />
+    <ClInclude Include="include\sketch\Document\Scene\ObjectDoc.h" />
+    <ClInclude Include="include\sketch\Document\Scene\SceneDoc.h" />
+    <ClInclude Include="include\sketch\Document\Scene\TFObjectDoc.h" />
+    <ClInclude Include="include\sketch\Document\View\ViewDisPlaySetting\ViewDisplaySetting.h" />
+    <ClInclude Include="include\sketch\Document\View\ViewDoc.h" />
+    <ClInclude Include="include\sketch\framework.h" />
+    <ClInclude Include="include\sketch\Document\Configure\Localization\LocalManager.h" />
+    <ClInclude Include="include\sketch\Command\Revertable\Revertable_Begin.h" />
+    <ClInclude Include="include\sketch\Interface\IF_Revertable.h" />
+    <ClInclude Include="include\sketch\Interface\IF_App.h" />
+    <ClInclude Include="include\sketch\Interface\IF_ClassColor.h" />
+    <ClInclude Include="include\sketch\Interface\IF_Common_Cfg.h" />
+    <ClInclude Include="include\sketch\Interface\IF_Controller.h" />
+    <ClInclude Include="include\sketch\Interface\IF_Document.h" />
+    <ClInclude Include="include\sketch\Interface\IF_History.h" />
+    <ClInclude Include="include\sketch\Interface\IF_Layout.h" />
+    <ClInclude Include="include\sketch\Interface\IF_Localization.h" />
+    <ClInclude Include="include\sketch\Interface\IF_Options.h" />
+    <ClInclude Include="include\sketch\Interface\IF_Settings.h" />
+    <ClInclude Include="include\sketch\Interface\IF_ShortCuts.h" />
+    <ClInclude Include="include\sketch\Interface\IF_UILayout.h" />
+    <ClInclude Include="include\sketch\Interface\Main\IF_Edit.h" />
+    <ClInclude Include="include\sketch\Interface\Main\IF_Scene.h" />
+    <ClInclude Include="include\sketch\Interface\Main\IF_SceneObject.h" />
+    <ClInclude Include="include\sketch\Interface\Main\IF_View.h" />
+    <ClInclude Include="include\sketch\NousEngine\NousConvert.h" />
+    <ClInclude Include="include\sketch\NousEngine\earcut.hpp" />
+    <ClInclude Include="include\sketch\NousEngine\NousEngine.h" />
+    <ClInclude Include="include\sketch\NousEngine\SketchBoundingSphere.h" />
+    <ClInclude Include="include\sketch\NousEngine\SketchRTree.h" />
+    <ClInclude Include="include\sketch\Nurbs\core\basis.h" />
+    <ClInclude Include="include\sketch\Nurbs\core\check.h" />
+    <ClInclude Include="include\sketch\Nurbs\core\curve.h" />
+    <ClInclude Include="include\sketch\Nurbs\core\evaluate.h" />
+    <ClInclude Include="include\sketch\Nurbs\core\modify.h" />
+    <ClInclude Include="include\sketch\Nurbs\core\point.h" />
+    <ClInclude Include="include\sketch\Nurbs\core\surface.h" />
+    <ClInclude Include="include\sketch\Nurbs\tinynurbs.h" />
+    <ClInclude Include="include\sketch\Nurbs\util\array2.h" />
+    <ClInclude Include="include\sketch\Nurbs\util\nurbs_factory.h" />
+    <ClInclude Include="include\sketch\Nurbs\util\util.h" />
+    <ClInclude Include="include\sketch\Object\SketchObject.h" />
+    <ClInclude Include="include\sketch\Object\SketchParamMap.h" />
+    <ClInclude Include="include\sketch\Object\SketchParamValue.h" />
+    <ClInclude Include="include\sketch\NousEngine\SketchMath.h" />
+    <ClInclude Include="include\sketch\pch.h" />
+    <ClInclude Include="include\sketch\resource.h" />
+    <ClInclude Include="include\sketch\RPC\RPCManager.h" />
+    <ClInclude Include="include\sketch\RPC\RPCProcessor.h" />
+    <ClInclude Include="include\sketch\Script\ScriptManager.h" />
+    <ClInclude Include="include\sketch\Serializer\SketchSerializer.h" />
+    <ClInclude Include="include\sketch\STCore.h" />
+    <ClInclude Include="include\sketch\targetver.h" />
+    <ClInclude Include="include\sketch\UIFuncs.h" />
+    <ClInclude Include="include\sketch\Util\HangUpJob.h" />
+    <ClInclude Include="include\sketch\Util\Util.h" />
+    <ClInclude Include="include\sketch\UV\AutoMappingUV.h" />
+    <ClInclude Include="include\sketch\UV\Parametrizer\BKE_utildefines.h" />
+    <ClInclude Include="include\sketch\UV\Parametrizer\BLI_arithb.h" />
+    <ClInclude Include="include\sketch\UV\Parametrizer\BLI_boxpack2d.h" />
+    <ClInclude Include="include\sketch\UV\Parametrizer\BLI_heap.h" />
+    <ClInclude Include="include\sketch\UV\Parametrizer\BLI_memarena.h" />
+    <ClInclude Include="include\sketch\UV\Parametrizer\DNA_listBase.h" />
+    <ClInclude Include="include\sketch\UV\Parametrizer\MEM_guardedalloc.h" />
+    <ClInclude Include="include\sketch\UV\Parametrizer\ONL_opennl.h" />
+    <ClInclude Include="include\sketch\UV\Parametrizer\OpenNLOld.h" />
+    <ClInclude Include="include\sketch\UV\Parametrizer\parametrizer.h" />
+    <ClInclude Include="include\sketch\UV\Parametrizer\parametrizer_intern.h" />
+    <ClInclude Include="include\sketch\UV\SuperLU\Cnames.h" />
+    <ClInclude Include="include\sketch\UV\SuperLU\colamd.h" />
+    <ClInclude Include="include\sketch\UV\SuperLU\ssp_defs.h" />
+    <ClInclude Include="include\sketch\UV\SuperLU\stdafx.h" />
+    <ClInclude Include="include\sketch\UV\SuperLU\supermatrix.h" />
+    <ClInclude Include="include\sketch\UV\SuperLU\super_lu_util.h" />
+    <ClInclude Include="include\sketch\View\ControllerManager.h" />
+    <ClInclude Include="include\sketch\View\Controller\Controller.h" />
+    <ClInclude Include="include\sketch\View\Controller\Handle\Handle.h" />
+    <ClInclude Include="include\sketch\View\Controller\Handle\HandleDirection.h" />
+    <ClInclude Include="include\sketch\View\Controller\Handle\HandleGizmo.h" />
+    <ClInclude Include="include\sketch\View\Controller\Handle\HandleProxy.h" />
+    <ClInclude Include="include\sketch\View\Controller\Main\Camera\Controller_Camera_TRS.h" />
+    <ClInclude Include="include\sketch\View\Controller\Main\Controller_Main.h" />
+    <ClInclude Include="include\sketch\View\Controller\Main\Controller_Select.h" />
+    <ClInclude Include="include\sketch\View\Controller\Main\Mesh\Controller_Edit.h" />
+    <ClInclude Include="include\sketch\View\Controller\Main\Mesh\Create\Controller_Create_Arc.h" />
+    <ClInclude Include="include\sketch\View\Controller\Main\Mesh\Create\Controller_Create_BSpline.h" />
+    <ClInclude Include="include\sketch\View\Controller\Main\Mesh\Create\Controller_Create_Polygon.h" />
+    <ClInclude Include="include\sketch\View\Controller\Main\Mesh\Edit\Controller_Buffer.h" />
+    <ClInclude Include="include\sketch\View\Controller\Main\Mesh\Edit\Controller_Edit_Nurbs.h" />
+    <ClInclude Include="include\sketch\View\Controller\Main\Mesh\Edit\Controller_Extrude_Freedom.h" />
+    <ClInclude Include="include\sketch\View\Controller\Main\Mesh\Edit\Controller_Extrude_ByPath.h" />
+    <ClInclude Include="include\sketch\View\RenderRes\Element.h" />
+    <ClInclude Include="include\sketch\View\RenderRes\GeoDataUtil.h" />
+    <ClInclude Include="include\sketch\View\RenderRes\IRenderable.h" />
+    <ClInclude Include="include\sketch\View\RenderRes\NurbsElement\INurbsBase.h" />
+    <ClInclude Include="include\sketch\View\RenderRes\NurbsElement\INurbsSurfaceBase.h" />
+    <ClInclude Include="include\sketch\View\RenderRes\NurbsElement\NurbsAlgebraSurfaceEdgeElement.h" />
+    <ClInclude Include="include\sketch\View\RenderRes\NurbsElement\NurbsClosedSurface.h" />
+    <ClInclude Include="include\sketch\View\RenderRes\NurbsElement\NurbsClosedSurfaceEdgeElement.h" />
+    <ClInclude Include="include\sketch\View\RenderRes\NurbsElement\NurbsComplexSurface.h" />
+    <ClInclude Include="include\sketch\View\RenderRes\NurbsElement\NurbsCurve.h" />
+    <ClInclude Include="include\sketch\View\RenderRes\NurbsElement\NurbsAlgebraSurface.h" />
+    <ClInclude Include="include\sketch\View\RenderRes\NurbsElement\NurbsElements.h" />
+    <ClInclude Include="include\sketch\View\RenderRes\NurbsElement\NurbsPoint.h" />
+    <ClInclude Include="include\sketch\View\RenderRes\NoBranchLineGroup.h" />
+    <ClInclude Include="include\sketch\View\RenderRes\SmoothGroup.h" />
+    <ClInclude Include="include\sketch\View\RenderScene\Group.h" />
+    <ClInclude Include="include\sketch\View\RenderRes\NurbsDataUtil.h" />
+    <ClInclude Include="include\sketch\View\Select\ElementSelector.h" />
+    <ClInclude Include="include\sketch\View\Select\InferenceHelper.h" />
+    <ClInclude Include="View\Controller\Main\Grid\Controller_Add_Grid_Line.h" />
+    <ClInclude Include="View\Controller\Main\Grid\Controller_Create_Grid.h" />
+    <ClInclude Include="include\sketch\View\Controller\Main\Mesh\Create\Controller_Create_Circle.h" />
+    <ClInclude Include="include\sketch\View\Controller\Main\Mesh\Create\Controller_Create_Rectangle.h" />
+    <ClInclude Include="include\sketch\View\Controller\Main\Mesh\Create\Controller_Create_StraightLine.h" />
+    <ClInclude Include="include\sketch\View\Controller\Main\Controller_Common_Operate.h" />
+    <ClInclude Include="include\sketch\View\Controller\Main\Mesh\Edit\Controller_Extrude_Polygon.h" />
+    <ClInclude Include="include\sketch\View\Controller\Main\Mesh\Edit\Controller_Rotate.h" />
+    <ClInclude Include="include\sketch\View\Controller\Main\Mesh\Edit\Controller_Scale.h" />
+    <ClInclude Include="include\sketch\View\Controller\Main\Mesh\Edit\Controller_Translate.h" />
+    <ClInclude Include="include\sketch\View\Controller\Main\Mesh\Edit\Controller_TRS.h" />
+    <ClInclude Include="include\sketch\View\RenderRes\GeoData.h" />
+    <ClInclude Include="include\sketch\View\RenderRes\RenderMesh.h" />
+    <ClInclude Include="include\sketch\View\RenderRes\ResManager.h" />
+    <ClInclude Include="include\sketch\View\RenderScene\Mesh\Mesh.h" />
+    <ClInclude Include="include\sketch\View\RenderScene\RenderObject.h" />
+    <ClInclude Include="include\sketch\View\RenderScene\RenderScene.h" />
+    <ClInclude Include="include\sketch\View\RenderView\IRender.h" />
+    <ClInclude Include="include\sketch\View\RenderView\Render.h" />
+    <ClInclude Include="include\sketch\View\RenderView\View.h" />
+    <ClInclude Include="include\sketch\View\ViewLayout\CELL_BATCH_BLOCK.h" />
+    <ClInclude Include="include\sketch\View\ViewLayout\CELL_TEXT_BLOCK.h" />
+    <ClInclude Include="include\sketch\View\ViewLayout\LayoutCell.h" />
+    <ClInclude Include="include\sketch\View\ViewLayout\TileViewLayout.h" />
+    <ClInclude Include="include\sketch\View\ViewLayout\ViewCamera.h" />
+    <ClInclude Include="include\sketch\View\ViewLayout\ViewLayout.h" />
+    <ClInclude Include="include\sketch\View\ViewManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\sketch\NousEngine\NousTopoUtil.h" />
+    <ClInclude Include="include\sketch\View\RenderRes\NurbsData.h" />
+    <ClCompile Include="src\Object\SketchBoundingSphere.cpp" />
+    <ClCompile Include="src\UV\AutoMappingUV.cpp" />
+    <ClCompile Include="src\Command\CmdManager.cpp" />
+    <ClCompile Include="src\Command\Command.cpp" />
+    <ClCompile Include="src\Command\Revertable\Revertable.cpp" />
+    <ClCompile Include="src\Command\Revertable\Revertable_End.cpp" />
+    <ClCompile Include="src\Command\Revertable\RvtBlock.cpp" />
+    <ClCompile Include="src\Command\Revertable\RvtPool.cpp" />
+    <ClCompile Include="src\Command\Revertable\Scene\Revertable_ObjectCreate.cpp" />
+    <ClCompile Include="src\Command\Revertable\Scene\Revertable_ObjectDelete.cpp" />
+    <ClCompile Include="src\Command\Revertable\Scene\Revertable_ObjectMatrixModify.cpp" />
+    <ClCompile Include="src\Command\Revertable\Scene\Revertable_ObjectModify.cpp" />
+    <ClCompile Include="src\Command\Revertable\Scene\Revertable_ObjectParentModify.cpp" />
+    <ClCompile Include="src\Command\Revertable\View\Revertable_View_Hide.cpp" />
+    <ClCompile Include="src\Common\EventPool.cpp" />
+    <ClCompile Include="src\Define.cpp" />
+    <ClCompile Include="src\dllmain.cpp" />
+    <ClCompile Include="src\Document\Configure\Color\ColorManager.cpp" />
+    <ClCompile Include="src\Document\Configure\ConfigureManager.cpp" />
+    <ClCompile Include="src\Document\Configure\History\HistoryManager.cpp" />
+    <ClCompile Include="src\Document\Configure\Layout\LayoutManager.cpp" />
+    <ClCompile Include="src\Document\Configure\Options.cpp" />
+    <ClCompile Include="src\Document\Configure\Pallete\Pallete.cpp" />
+    <ClCompile Include="src\Document\Configure\Pallete\PalleteManager.cpp" />
+    <ClCompile Include="src\Document\Configure\Settings.cpp" />
+    <ClCompile Include="src\Document\Configure\ShortCut\ShortCutManager.cpp" />
+    <ClCompile Include="src\Document\DocElement.cpp" />
+    <ClCompile Include="src\Document\DocListener.cpp" />
+    <ClCompile Include="src\Document\DocManager.cpp" />
+    <ClCompile Include="src\Document\Document.cpp" />
+    <ClCompile Include="src\Document\Scene\GroupDoc.cpp" />
+    <ClCompile Include="src\Document\Scene\LoadSceneHangUp.cpp" />
+    <ClCompile Include="src\Document\Scene\Mesh\MeshDoc.cpp" />
+    <ClCompile Include="src\Document\Scene\Mesh\NurbsDoc.cpp" />
+    <ClCompile Include="src\Document\Scene\ObjectDoc.cpp" />
+    <ClCompile Include="src\Document\Scene\SceneDoc.cpp" />
+    <ClCompile Include="src\Document\Scene\TFObjectDoc.cpp" />
+    <ClCompile Include="src\Document\View\ViewDisplaySetting\ViewDisplaySetting.cpp" />
+    <ClCompile Include="src\Document\View\ViewDoc.cpp" />
+    <ClCompile Include="src\Document\Configure\Localization\LocalManager.cpp" />
+    <ClCompile Include="src\Command\Revertable\Revertable_Begin.cpp" />
+    <ClCompile Include="src\Inteface\IF_App.cpp" />
+    <ClCompile Include="src\Inteface\IF_ClassColor.cpp" />
+    <ClCompile Include="src\Inteface\IF_Common_Cfg.cpp" />
+    <ClCompile Include="src\Inteface\IF_Controller.cpp" />
+    <ClCompile Include="src\Inteface\IF_Document.cpp" />
+    <ClCompile Include="src\Inteface\IF_History.cpp" />
+    <ClCompile Include="src\Inteface\IF_Layout.cpp" />
+    <ClCompile Include="src\Inteface\IF_Localization.cpp" />
+    <ClCompile Include="src\Inteface\IF_Options.cpp" />
+    <ClCompile Include="src\Inteface\IF_Revertable.cpp" />
+    <ClCompile Include="src\Inteface\IF_Settings.cpp" />
+    <ClCompile Include="src\Inteface\IF_ShortCuts.cpp" />
+    <ClCompile Include="src\Inteface\IF_UILayout.cpp" />
+    <ClCompile Include="src\Inteface\IF_ViewManager.cpp" />
+    <ClCompile Include="src\Inteface\Main\IF_Edit.cpp" />
+    <ClCompile Include="src\Inteface\Main\IF_Scene.cpp" />
+    <ClCompile Include="src\Inteface\Main\IF_SceneObject.cpp" />
+    <ClCompile Include="src\Inteface\Main\IF_View.cpp" />
+    <ClCompile Include="src\NousEngine\NousConvert.cpp" />
+    <ClCompile Include="src\NousEngine\NousEngine.cpp" />
+    <ClCompile Include="src\NousEngine\NousTopoUtil.cpp" />
+    <ClCompile Include="src\Nurbs\util\nurbs_factory.cpp" />
+    <ClCompile Include="src\Object\SketchParamMap.cpp" />
+    <ClCompile Include="src\Object\SketchParamValue.cpp" />
+    <ClCompile Include="src\NousEngine\SketchMath.cpp" />
+    <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\RPC\RPCManager.cpp" />
+    <ClCompile Include="src\RPC\RPCProcessor.cpp" />
+    <ClCompile Include="src\Script\ScriptManager.cpp" />
+    <ClCompile Include="src\Serializer\SketchSerializer.cpp" />
+    <ClCompile Include="src\STCore.cpp" />
+    <ClCompile Include="src\UIFuncs.cpp" />
+    <ClCompile Include="src\Util\HangUpJob.cpp" />
+    <ClCompile Include="src\Util\Util.cpp" />
+    <ClCompile Include="src\UV\Parametrizer\arithb.cpp" />
+    <ClCompile Include="src\UV\Parametrizer\BLI_heap.cpp" />
+    <ClCompile Include="src\UV\Parametrizer\BLI_memarena.cpp" />
+    <ClCompile Include="src\UV\Parametrizer\boxpack2d.cpp" />
+    <ClCompile Include="src\UV\Parametrizer\mallocn.cpp" />
+    <ClCompile Include="src\UV\Parametrizer\opennl.cpp" />
+    <ClCompile Include="src\UV\Parametrizer\OpenNLOld.cpp" />
+    <ClCompile Include="src\UV\Parametrizer\parameterizer.cpp" />
+    <ClCompile Include="src\UV\SuperLU\colamd.cpp" />
+    <ClCompile Include="src\UV\SuperLU\get_perm_c.cpp" />
+    <ClCompile Include="src\UV\SuperLU\heap_relax_snode.cpp" />
+    <ClCompile Include="src\UV\SuperLU\lsame.cpp" />
+    <ClCompile Include="src\UV\SuperLU\memory.cpp" />
+    <ClCompile Include="src\UV\SuperLU\mmd.cpp" />
+    <ClCompile Include="src\UV\SuperLU\relax_snode.cpp" />
+    <ClCompile Include="src\UV\SuperLU\scolumn_bmod.cpp" />
+    <ClCompile Include="src\UV\SuperLU\scolumn_dfs.cpp" />
+    <ClCompile Include="src\UV\SuperLU\scopy_to_ucol.cpp" />
+    <ClCompile Include="src\UV\SuperLU\sgssv.cpp" />
+    <ClCompile Include="src\UV\SuperLU\sgstrf.cpp" />
+    <ClCompile Include="src\UV\SuperLU\sgstrs.cpp" />
+    <ClCompile Include="src\UV\SuperLU\smemory.cpp" />
+    <ClCompile Include="src\UV\SuperLU\smyblas2.cpp" />
+    <ClCompile Include="src\UV\SuperLU\spanel_bmod.cpp" />
+    <ClCompile Include="src\UV\SuperLU\spanel_dfs.cpp" />
+    <ClCompile Include="src\UV\SuperLU\spivotL.cpp" />
+    <ClCompile Include="src\UV\SuperLU\spruneL.cpp" />
+    <ClCompile Include="src\UV\SuperLU\sp_coletree.cpp" />
+    <ClCompile Include="src\UV\SuperLU\sp_ienv.cpp" />
+    <ClCompile Include="src\UV\SuperLU\sp_preorder.cpp" />
+    <ClCompile Include="src\UV\SuperLU\ssnode_bmod.cpp" />
+    <ClCompile Include="src\UV\SuperLU\ssnode_dfs.cpp" />
+    <ClCompile Include="src\UV\SuperLU\ssp_blas2.cpp" />
+    <ClCompile Include="src\UV\SuperLU\ssp_blas3.cpp" />
+    <ClCompile Include="src\UV\SuperLU\strsv.cpp" />
+    <ClCompile Include="src\UV\SuperLU\superlu_timer.cpp" />
+    <ClCompile Include="src\UV\SuperLU\sutil.cpp" />
+    <ClCompile Include="src\UV\SuperLU\super_lu_util.cpp" />
+    <ClCompile Include="src\UV\SuperLU\xerbla.cpp" />
+    <ClCompile Include="src\View\ControllerManager.cpp" />
+    <ClCompile Include="src\View\Controller\Controller.cpp" />
+    <ClCompile Include="src\View\Controller\Handle\Handle.cpp" />
+    <ClCompile Include="src\View\Controller\Handle\HandleDirection.cpp" />
+    <ClCompile Include="src\View\Controller\Handle\HandleGizmo.cpp" />
+    <ClCompile Include="src\View\Controller\Handle\HandleProxy.cpp" />
+    <ClCompile Include="src\View\Controller\Main\Camera\Controller_Camera_TRS.cpp" />
+    <ClCompile Include="src\View\Controller\Main\Controller_Main.cpp" />
+    <ClCompile Include="src\View\Controller\Main\Controller_Select.cpp" />
+    <ClCompile Include="src\View\Controller\Main\Mesh\Controller_Edit.cpp" />
+    <ClCompile Include="src\View\Controller\Main\Mesh\Create\Controller_Create_Arc.cpp" />
+    <ClCompile Include="src\View\Controller\Main\Mesh\Create\Controller_Create_BSpline.cpp" />
+    <ClCompile Include="src\View\Controller\Main\Mesh\Create\Controller_Create_Circle.cpp" />
+    <ClCompile Include="src\View\Controller\Main\Mesh\Create\Controller_Create_Polygon.cpp" />
+    <ClCompile Include="src\View\Controller\Main\Mesh\Create\Controller_Create_Rectangle.cpp" />
+    <ClCompile Include="src\View\Controller\Main\Mesh\Create\Controller_Create_StraightLine.cpp" />
+    <ClCompile Include="src\View\Controller\Main\Controller_Common_Operate.cpp" />
+    <ClCompile Include="src\View\Controller\Main\Mesh\Edit\Controller_Buffer.cpp" />
+    <ClCompile Include="src\View\Controller\Main\Mesh\Edit\Controller_Edit_Nurbs.cpp" />
+    <ClCompile Include="src\View\Controller\Main\Mesh\Edit\Controller_Extrude_Freedom.cpp" />
+    <ClCompile Include="src\View\Controller\Main\Mesh\Edit\Controller_Extrude_ByPath.cpp" />
+    <ClCompile Include="src\View\Controller\Main\Mesh\Edit\Controller_Extrude_Polygon.cpp" />
+    <ClCompile Include="src\View\Controller\Main\Mesh\Edit\Controller_Rotate.cpp" />
+    <ClCompile Include="src\View\Controller\Main\Mesh\Edit\Controller_Scale.cpp" />
+    <ClCompile Include="src\View\Controller\Main\Mesh\Edit\Controller_Translate.cpp" />
+    <ClCompile Include="src\View\Controller\Main\Mesh\Edit\Controller_TRS.cpp" />
+    <ClCompile Include="src\View\RenderRes\Element.cpp" />
+    <ClCompile Include="src\View\RenderRes\GeoData.cpp" />
+    <ClCompile Include="src\View\RenderRes\GeoDataUtil.cpp" />
+    <ClCompile Include="src\View\RenderRes\NoBranchLineGroup.cpp" />
+    <ClCompile Include="src\View\RenderRes\NurbsData.cpp" />
+    <ClCompile Include="src\View\RenderRes\NurbsDataUtil.cpp" />
+    <ClCompile Include="src\View\RenderRes\NurbsElement\NurbsClosedSurface.cpp" />
+    <ClCompile Include="src\View\RenderRes\NurbsElement\NurbsComplexSurface.cpp" />
+    <ClCompile Include="src\View\RenderRes\NurbsElement\NurbsCurve.cpp" />
+    <ClCompile Include="src\View\RenderRes\NurbsElement\NurbsAlgebraSurface.cpp" />
+    <ClCompile Include="src\View\RenderRes\NurbsElement\NurbsPoint.cpp" />
+    <ClCompile Include="src\View\RenderRes\ResManager.cpp" />
+    <ClCompile Include="src\View\RenderRes\SmoothGroup.cpp" />
+    <ClCompile Include="src\View\RenderScene\Group.cpp" />
+    <ClCompile Include="src\View\RenderScene\Mesh\Mesh.cpp" />
+    <ClCompile Include="src\View\RenderScene\RenderObject.cpp" />
+    <ClCompile Include="src\View\RenderScene\RenderScene.cpp" />
+    <ClCompile Include="src\View\RenderView\Render.cpp" />
+    <ClCompile Include="src\View\RenderView\View.cpp" />
+    <ClCompile Include="src\View\Select\ElementSelector.cpp" />
+    <ClCompile Include="src\View\Select\InferenceHelper.cpp" />
+    <ClCompile Include="src\View\ViewLayout\CELL_BATCH_BLOCK.cpp" />
+    <ClCompile Include="src\View\ViewLayout\CELL_TEXT_BLOCK.cpp" />
+    <ClCompile Include="src\View\ViewLayout\LayoutCell.cpp" />
+    <ClCompile Include="src\View\ViewLayout\TileViewLayout.cpp" />
+    <ClCompile Include="src\View\ViewLayout\ViewCamera.cpp" />
+    <ClCompile Include="src\View\ViewLayout\ViewLayout.cpp" />
+    <ClCompile Include="src\View\ViewManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Core.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\polygon_pattern_bricks.png" />
+    <Image Include="res\polygon_pattern_chess.png" />
+    <Image Include="res\polygon_pattern_lines.png" />
+    <Image Include="res\view_clip.png" />
+    <Image Include="res\view_close.png" />
+    <Image Include="res\view_max.png" />
+    <Image Include="res\view_min.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.editorconfig" />
+    <None Include="res\view_buttons.psd" />
+    <None Include="res\view_clip.psd" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

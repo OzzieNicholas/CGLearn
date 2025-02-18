@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/nous.svg" />
+  <title>Nous Performance Profiler</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <style>
+    body {
+      font-family: arial;
+      margin: 0;
+      padding: none;
+      background-color: rgb(60, 60, 60);
+    }
+
+    .emscripten {
+      padding-right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+    }
+
+    div.emscripten {
+      text-align: center;
+    }
+
+    /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
+    canvas.emscripten {
+      border: 0px none;
+      background-color: rgb(60, 60, 60);
+    }
+  </style>
+</head>
+
+<body>
+  <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
+  <script type='text/javascript'>
+    function resizeHandler() {
+      let w = Math.floor(Math.floor(window.innerWidth * window.devicePixelRatio) / window.devicePixelRatio);
+      let h = Math.floor(Math.floor(window.innerHeight * window.devicePixelRatio) / window.devicePixelRatio);
+      if (Module.ccall) {
+        Module.ccall('nativeResize', 'number', ['number', 'number'], [w * window.devicePixelRatio, h * window.devicePixelRatio]);
+        // console.log(Module)
+      }
+      Module.canvas.style.width = w + 'px';
+      Module.canvas.style.height = h + 'px';
+    }
+
+    var Module = {
+      preRun: [],
+      postRun: [() => {
+        resizeHandler()
+
+      }],
+      // arguments: ['-a', '127.0.0.1', '-p', '12113'],
+      print: (function () {
+        return function (text) {
+          if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+          console.log(text);
+        };
+      })(),
+      canvas: (function () {
+        var canvas = document.getElementById('canvas');
+
+        // As a default initial behavior, pop up an alert when webgl context is lost. To make your
+        // application robust, you may want to override this behavior before shipping!
+        // See http://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15.2
+        canvas.addEventListener("webglcontextlost", function (e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
+
+        return canvas;
+      })(),
+      setStatus: function (text) {
+        if (!Module.setStatus.last) Module.setStatus.last = { time: Date.now(), text: '' };
+        if (text === Module.setStatus.last.text) return;
+        var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
+        var now = Date.now();
+        if (m && now - Module.setStatus.last.time < 30) return; // if this is a progress update, skip it if too soon
+        Module.setStatus.last.time = now;
+        Module.setStatus.last.text = text;
+        if (m) {
+          text = m[1];
+          console.log(`state: ${text}`)
+        } else if (!text) {
+          resizeHandler();
+        }
+      }
+    };
+
+    window.onerror = function (event) {
+      // TODO: do not warn on ok events like simulating an infinite loop or exitStatus
+      Module.setStatus('Exception thrown, see JavaScript console');
+      Module.setStatus = function (text) {
+        if (text) console.error('[post-exception status] ' + text);
+      };
+    };
+    addEventListener('resize', resizeHandler);
+    resizeHandler();
+  </script>
+  <script async type="text/javascript" src="tracy-profiler.js"></script>
+</body>
+
+</html>

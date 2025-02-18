@@ -1,0 +1,135 @@
+---
+Checks: >
+  *,
+  -abseil-*,
+  -altera-*,
+  -android-*,
+  -boost-*,
+  -cert-*,
+  -cppcoreguidelines-*,
+  -darwin-*,
+  -fuchsia-*,
+  -google-*,
+  -hicpp-*,
+  -linuxkernel-*,
+  -llvm-*,
+  -llvmlibc-*,
+  -mpi-*,
+  -objc-*,
+  -openmp-*,
+  -zircon-*,
+  cert-err34-c,
+  google-explicit-constructor,
+  cppcoreguidelines-rvalue-reference-param-not-moved,
+  -bugprone-assignment-in-if-condition,
+  -bugprone-branch-clone,
+  -bugprone-easily-swappable-parameters,
+  -bugprone-empty-catch,
+  -bugprone-macro-parentheses,
+  -bugprone-narrowing-conversions,
+  -bugprone-signed-char-misuse,
+  -bugprone-switch-missing-default-case,
+  -bugprone-exception-escape,
+  -clang-analyzer-*,
+  -concurrency-mt-unsafe,
+  -misc-include-cleaner,
+  -misc-no-recursion,
+  -misc-non-private-member-variables-in-classes,
+  -misc-throw-by-value-catch-by-reference,
+  -misc-use-anonymous-namespace,
+  -misc-redundant-expression,
+  -modernize-avoid-c-arrays,
+  -modernize-deprecated-ios-base-aliases,
+  -modernize-macro-to-enum,
+  -modernize-loop-convert,
+  -modernize-raw-string-literal,
+  -modernize-replace-auto-ptr,
+  -modernize-use-auto,
+  -modernize-use-trailing-return-type,
+  -modernize-use-nodiscard,
+  -performance-no-int-to-ptr,
+  -performance-avoid-endl,
+  -performance-inefficient-string-concatenation,
+  -performance-no-automatic-move,
+  -performance-noexcept-swap,
+  -portability-simd-intrinsics,
+  -portability-std-allocator-const,
+  -readability-avoid-unconditional-preprocessor-if,
+  -readability-static-definition-in-anonymous-namespace,
+  -readability-redundant-declaration,
+  -readability-use-anyofallof,
+  -readability-qualified-auto,
+  -readability-redundant-string-cstr,
+  -readability-named-parameter,
+  -readability-avoid-const-params-in-decls,
+  -readability-braces-around-statements,
+  -readability-const-return-type,
+  -readability-container-data-pointer,
+  -readability-convert-member-functions-to-static,
+  -readability-function-cognitive-complexity,
+  -readability-function-size,
+  -readability-identifier-length,
+  -readability-implicit-bool-conversion,
+  -readability-isolate-declaration,
+  -readability-magic-numbers,
+  -readability-redundant-access-specifiers,
+  -readability-suspicious-call-argument,
+  -readability-uppercase-literal-suffix,
+  -readability-redundant-inline-specifier,
+  -readability-avoid-nested-conditional-operator,
+  -clang-diagnostic-deprecated-declarations,
+  -clang-diagnostic-enum-compare,
+  -clang-diagnostic-deprecated-declarations,
+  -clang-diagnostic-return-stack-address,
+  -clang-diagnostic-return-type-c-linkage
+WarningsAsErrors: '*'
+HeaderFilterRegex: ''
+# CheckOptions:
+#   - key: misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic
+#     value: '1'
+#   - key: readability-simplify-boolean-expr.SimplifyDeMorgan
+#     value: '0'
+#   - key: readability-identifier-naming.ClassCase
+#     value: CamelCase
+#   - key: readability-identifier-naming.StructCase
+#     value: CamelCase
+#   - key: readability-identifier-naming.EnumCase
+#     value: CamelCase
+#   - key: readability-identifier-naming.FunctionCase
+#     value: lower_case
+#   - key: readability-identifier-naming.MemberCase
+#     value: lower_case
+#   - key: readability-identifier-naming.ParameterCase
+#     value: lower_case
+#   - key: readability-identifier-naming.MethodCase
+#     value: lower_case
+#   - key: readability-identifier-naming.UnionCase
+#     value: CamelCase
+#   - key: readability-identifier-naming.VariableCase
+#     value: lower_case
+#   - key: readability-identifier-naming.StaticVariableCase
+#     value: lower_case
+#   - key: readability-identifier-naming.ClassMemberCase
+#     value: lower_case
+#   - key: readability-identifier-naming.ClassMethodCase
+#     value: lower_case
+#   - key: readability-identifier-naming.PublicMethodCase
+#     value: lower_case
+#   - key: readability-identifier-naming.PublicMemberCase
+#     value: lower_case
+#   - key: readability-identifier-naming.ProtectedMethodCase
+#     value: lower_case
+#   - key: readability-identifier-naming.ProtectedMemberCase
+#     value: lower_case
+#   - key: readability-identifier-naming.PrivateMethodCase
+#     value: lower_case
+#   - key: readability-identifier-naming.PrivateMemberCase
+#     value: lower_case
+#   - key: readability-identifier-naming.PointerParameterCase
+#     value: lower_case
+#   - key: readability-identifier-naming.LocalVariableCase
+#     value: lower_case
+#   - key: readability-identifier-naming.GlobalVariableCase
+#     value: lower_case
+#   - key: readability-identifier-naming.MacroDefinitionCase
+#     value: UPPER_CASE

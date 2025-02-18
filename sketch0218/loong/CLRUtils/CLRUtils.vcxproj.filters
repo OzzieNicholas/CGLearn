@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="Stdafx.cpp" />
+    <ClCompile Include="wrUtil.cpp" />
+    <ClCompile Include="StrUtil.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="wrUtil.h" />
+    <ClInclude Include="CLRUtils.h" />
+    <ClInclude Include="StrUtil.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\nouveau_core\CMakeLists.txt" />
+  </ItemGroup>
+</Project>
