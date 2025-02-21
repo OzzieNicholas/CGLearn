@@ -634,6 +634,33 @@ std::vector<std::vector<size_t>> GeoDataUtils::convert_polygon_to_rel_point_idx(
     return result;
 }
 
+// add
+// 检测目标多边形是否完全被另一个多边形包含
+bool GeoDataUtils::is_polygon_contained(GeoData* geodata, const std::vector<std::vector<nous::vec3>>& target_polygon,
+                                        SketchPolygonPtr container_polygon)
+{
+    std::vector<std::vector<nous::vec3>> container_positions;
+    get_polygon_positions(geodata, container_polygon, container_positions);
+    // 顶点包含检测（需要完善代码）
+    for (auto& pt_ring : target_polygon)
+    {
+        for (auto& pt : pt_ring)
+        {
+            if (!is_point_inside_polygon(pt, container_positions))
+            {
+                return false;
+            }
+        }
+    }
+    // 边界交叉检测（需要完善代码）
+    if (!do_polygons_intersect(target_polygon, container_positions))
+    {
+        return false;
+    }
+    return true;
+}
+// add
+
 GeoDataTopoOperations& GeoDataTopoOperations::get()
 {
     static GeoDataTopoOperations _instance;

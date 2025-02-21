@@ -29,23 +29,30 @@ using namespace Engine;
 
 namespace sketch
 {
+// 函数功能：构造一个GeoData对象，初始化成员变量
 GeoData::GeoData()
     : SketchObject(ESketchObjectType::GeoData), IRenderable(), m_dirty_flags(0xffffffff), m_nous_mesh(nous::NMesh::create()),
       m_nous_position_handle(m_nous_mesh->point_attrib<nous::pos_t>(nous::ATTRIB_NAME_POS))
 {
+    // 初始化m_lines_tree为一个SketchRTree<SketchLinePtr>对象
     m_lines_tree = std::make_shared<SketchRTree<SketchLinePtr>>();
+    // 初始化m_ring_tree为一个SketchRTree<SketchRingPtr>对象
     m_ring_tree = std::make_shared<SketchRTree<SketchRingPtr>>();
 }
 
+// 函数功能：拷贝构造函数，创建一个新的GeoData对象，并将另一个GeoData对象的所有数据复制到新对象中
 GeoData::GeoData(const GeoData& other)
     : SketchObject(ESketchObjectType::GeoData), m_nous_mesh(nous::NMesh::create()),
       m_nous_position_handle(m_nous_mesh->point_attrib<nous::pos_t>(nous::ATTRIB_NAME_POS))
 {
+    // 复制m_nous_mesh数据
     m_nous_mesh->copy(other.m_nous_mesh.get());
+    // 初始化m_lines_tree为一个SketchRTree<SketchLinePtr>对象
     m_lines_tree = std::make_shared<SketchRTree<SketchLinePtr>>();
+    // 初始化m_ring_tree为一个SketchRTree<SketchRingPtr>对象
     m_ring_tree = std::make_shared<SketchRTree<SketchRingPtr>>();
 
-    // points
+    // 复制点数据
     int num_points = m_nous_mesh->num_points();
     for(int i = 0; i < num_points; ++i)
     {
@@ -53,7 +60,7 @@ GeoData::GeoData(const GeoData& other)
         m_nousptr_points[point] = std::make_shared<SketchPoint>(point);
     }
 
-    // lines
+    // 复制线数据
     for(const auto& pair: other.m_key_lines)
     {
         nous::Prim* line_prim = m_nous_mesh->prim(pair.second->line_prim->idx());
@@ -68,16 +75,16 @@ GeoData::GeoData(const GeoData& other)
         m_key_lines[lk]->p1 = m_nousptr_points.at(point1);
         m_nousptr_lines[line_prim] = m_key_lines[lk];
 
-        // rtree
+        // 将线对象插入到m_lines_tree中
         nous::AABB3 line_box = GeoDataUtils::get().get_element_aabb3(this, m_key_lines[lk]);
         m_lines_tree->insert_object(m_key_lines[lk], line_box);
     }
 
-    // rings
+    // 复制环数据
     for(const auto& pair: other.m_key_rings)
     {
         nous::Prim* ring_prim = m_nous_mesh->prim(pair.second->ring_prim->idx());
-        // key
+        // 获取环的点数据
         std::vector<SketchPointPtr> ring_points;
         for(auto vtx_idx: m_nous_mesh->prim_vertices_range(ring_prim->idx()))
         {
@@ -89,12 +96,12 @@ GeoData::GeoData(const GeoData& other)
         m_key_rings[ring_key] = ring;
         m_nousptr_rings[ring_prim] = ring;
 
-        // rtree
+        // 将环对象插入到m_ring_tree中
         nous::AABB3 ring_box = GeoDataUtils::get().get_element_aabb3(this, ring);
         m_ring_tree->insert_object(ring, ring_box);
     }
 
-    // polygons
+    // 复制多边形数据
     for(auto& ring_relation: other.m_ring_adj_polygons)
     {
         nous::Prim* ring_prim = m_nous_mesh->prim(ring_relation.first->ring_prim->idx());
@@ -127,7 +134,7 @@ GeoData::GeoData(const GeoData& other)
         {
             nous::Prim* parent_ring_prim = m_nous_mesh->prim(ring_relation.second.parent_polygon->ring->ring_prim->idx());
             SketchRingPtr parent_ring = m_nousptr_rings.at(parent_ring_prim);
-            // parent
+            // 设置父多边形
             auto parent_pos = m_ring_adj_polygons.find(parent_ring);
             if(parent_pos == m_ring_adj_polygons.end())
             {
@@ -139,7 +146,7 @@ GeoData::GeoData(const GeoData& other)
         }
     }
 
-    // group
+    // 复制元素组数据
     for(auto& group: other.m_ele_groups)
     {
         ElementGroupPtr new_group = nullptr;
@@ -178,6 +185,7 @@ GeoData::GeoData(const GeoData& other)
         }
     }
 
+    // 设置脏标志
     m_dirty_flags = 0xffffffff;
 }
 
@@ -192,37 +200,43 @@ void GeoData::dispose()
 
 std::unordered_set<SketchPolygonPtr> GeoData::get_all_polygons()
 {
+    // 函数功能：获取所有的多边形对象，包括直接的和父级的多边形对象
     std::unordered_set<SketchPolygonPtr> result;
 
+    // 遍历m_ring_adj_polygons，获取所有的多边形对象
     for(auto& ring_pg_pair: m_ring_adj_polygons)
     {
         if(ring_pg_pair.second.polygon)
         {
-            result.insert(ring_pg_pair.second.polygon);
+            result.insert(ring_pg_pair.second.polygon); // 如果存在多边形对象，则插入到结果集中
         }
 
         if(ring_pg_pair.second.parent_polygon)
         {
-            result.insert(ring_pg_pair.second.parent_polygon);
+            result.insert(ring_pg_pair.second.parent_polygon); // 如果存在父级多边形对象，则插入到结果集中
         }
     }
 
-    return result;
+    return result; // 返回所有的多边形对象
 }
 
+// 函数功能：判断给定的prim是否为有效的线段
 bool GeoData::is_line(const nous::Prim* prim) const
 {
+    // 检查prim是否存在，类型是否为Polyline，顶点数是否为2，且是否有效
     if(prim && prim->type() == nous::PrimType::Polyline && prim->num_vertices() == 2 && prim->is_valid())
     {
-        return true;
+        return true; // 如果满足上述条件，则返回true
     }
-    return false;
+    return false; // 否则返回false
 }
 
 std::unordered_set<SketchRingPtr> GeoData::get_line_adj_rings(SketchLinePtr line)
 {
+    // 函数功能：获取与给定线段相邻的所有环对象
     std::unordered_set<SketchRingPtr> result;
 
+    // 遍历线段起点的所有顶点，检查是否有与线段终点相连的环对象
     for(const nous::index_t& vtx_idx: m_nous_mesh->point_vertices_range(line->p0->point->idx()))
     {
         nous::Vertex* point_vertex = m_nous_mesh->vertex(vtx_idx);
@@ -230,7 +244,7 @@ std::unordered_set<SketchRingPtr> GeoData::get_line_adj_rings(SketchLinePtr line
         {
             if(!is_line(point_vertex->prim_ptr()))
             {
-                result.insert(m_nousptr_rings.at(point_vertex->prim_ptr()));
+                result.insert(m_nousptr_rings.at(point_vertex->prim_ptr())); // 插入相邻的环对象
             }
         }
 
@@ -238,11 +252,12 @@ std::unordered_set<SketchRingPtr> GeoData::get_line_adj_rings(SketchLinePtr line
         {
             if(!is_line(point_vertex->prim_ptr()))
             {
-                result.insert(m_nousptr_rings.at(point_vertex->prim_ptr()));
+                result.insert(m_nousptr_rings.at(point_vertex->prim_ptr())); // 插入相邻的环对象
             }
         }
     }
 
+    // 遍历线段终点的所有顶点，检查是否有与线段起点相连的环对象
     for(const nous::index_t& vtx_idx: m_nous_mesh->point_vertices_range(line->p1->point->idx()))
     {
         nous::Vertex* point_vertex = m_nous_mesh->vertex(vtx_idx);
@@ -250,7 +265,7 @@ std::unordered_set<SketchRingPtr> GeoData::get_line_adj_rings(SketchLinePtr line
         {
             if(!is_line(point_vertex->prim_ptr()))
             {
-                result.insert(m_nousptr_rings.at(point_vertex->prim_ptr()));
+                result.insert(m_nousptr_rings.at(point_vertex->prim_ptr())); // 插入相邻的环对象
             }
         }
 
@@ -258,82 +273,100 @@ std::unordered_set<SketchRingPtr> GeoData::get_line_adj_rings(SketchLinePtr line
         {
             if(!is_line(point_vertex->prim_ptr()))
             {
-                result.insert(m_nousptr_rings.at(point_vertex->prim_ptr()));
+                result.insert(m_nousptr_rings.at(point_vertex->prim_ptr())); // 插入相邻的环对象
             }
         }
     }
-    return result;
+    return result; // 返回所有相邻的环对象
 }
 
+// 函数功能：获取与给定环对象相邻的所有线对象
 std::unordered_set<SketchLinePtr> GeoData::get_ring_adj_lines(SketchRingPtr ring_prim)
 {
     std::unordered_set<SketchLinePtr> result;
 
+    // 获取环对象的所有顶点
     std::vector<SketchPointPtr> topo = this->get_element_points(ring_prim);
     for(int i = 0; i < topo.size(); ++i)
     {
+        // 计算相邻顶点之间的线的键值
         size_t lk = line_key(topo[i], topo[(i + 1) % topo.size()]);
+        // 如果线存在于m_key_lines中，则将其插入结果集中
         if(m_key_lines.find(lk) != m_key_lines.end())
         {
             result.insert(m_key_lines[lk]);
         }
     }
 
+    // 返回所有相邻的线对象
     return result;
 }
 
+// 函数功能：获取给定点的所有相邻点
 std::unordered_set<SketchPointPtr> GeoData::get_point_adj_points(SketchPointPtr point)
 {
-    std::unordered_set<SketchPointPtr> result;
-    if(!point->point->vertex_ptr())
+    std::unordered_set<SketchPointPtr> result; // 创建一个空的unordered_set用于存储相邻点
+    if(!point->point->vertex_ptr()) // 检查给定点是否有顶点指针，如果没有则返回空的result
     {
-        return result;
+        return result; // 返回空的result
     }
+    // 遍历给定点的所有邻居点索引
     for(const nous::index_t& pt_idx: m_nous_mesh->point_neighbours_range(point->point->idx()))
     {
+        // 获取邻居点的指针
         SketchPointPtr adj_pt = m_nousptr_points.at(m_nous_mesh->point(pt_idx));
-        if(adj_pt)
+        if(adj_pt) // 如果邻居点存在
         {
-            result.insert(adj_pt);
+            result.insert(adj_pt); // 将邻居点插入到result中
         }
     }
 
-    return result;
+    return result; // 返回所有相邻点的集合
 }
 
+// 函数功能：添加一个点到GeoData对象中，如果点已经存在则返回已有的点，否则添加新点
 SketchPointPtr GeoData::add_point(const nous::vec3& pos)
 {
+    // 遍历所有点，检查是否已经存在相同位置的点
     for(const auto& pt_idx: m_nous_mesh->point_index_range())
     {
         const nous::pos_t exist_pt_pos = m_nous_position_handle.get(pt_idx);
         if(sketch_math::point_equal(pos, exist_pt_pos))
         {
+            // 如果存在相同位置的点，则返回已有的点
             return m_nousptr_points.at(m_nous_mesh->point(pt_idx));
         }
     }
 
+    // 如果不存在相同位置的点，则添加新点
     return add_point_without_check(pos);
 }
 
+// 函数功能：添加一个点到GeoData对象中，不进行重复检查
 SketchPointPtr GeoData::add_point_without_check(const nous::vec3& pos)
 {
+    // 创建一个新的nous::Point对象，并将其添加到m_nous_mesh中
     nous::Point* np = m_nous_mesh->point(m_nous_mesh->add_point(pos));
+    // 创建一个新的SketchPoint对象，并将其与新创建的nous::Point对象关联
     SketchPointPtr point = std::make_shared<SketchPoint>(np);
+    // 将新创建的SketchPoint对象存储到m_nousptr_points映射中，以便后续查找
     m_nousptr_points[np] = point;
+    // 返回新创建的SketchPoint对象
     return point;
 }
 
+// 函数功能：添加一条线段，并根据需要生成多边形
 std::vector<SketchLinePtr> GeoData::add_line(const nous::vec3& p0, const nous::vec3& p1, bool genPolygon)
 {
-    std::vector<SketchLinePtr> new_lines;
-    std::vector<SketchPointPtr> new_line_points;
-    std::map<SketchLinePtr, std::vector<SketchPointPtr>> recreat_line;
-    this->_add_line(p0, p1, recreat_line, new_line_points);
+    std::vector<SketchLinePtr> new_lines; // 存储新添加的线段
+    std::vector<SketchPointPtr> new_line_points; // 存储新线段的点
+    std::map<SketchLinePtr, std::vector<SketchPointPtr>> recreat_line; // 存储需要重新创建的线段及其点
+    this->_add_line(p0, p1, recreat_line, new_line_points); // 添加线段并获取需要重新创建的线段及其点
 
     // 旧line与其焊接组标记
     for(auto& rl: recreat_line)
     {
-        GeoDataTopoOperations::get().replace_line(this, rl.first, rl.second);
+        GeoDataTopoOperations::get().replace_line(this, rl.first, rl.second); // 替换旧线段
     }
 
     // 查找标记被影响的组
@@ -354,7 +387,7 @@ std::vector<SketchLinePtr> GeoData::add_line(const nous::vec3& p0, const nous::v
                 else if(group->type() == EElementType::SmoothGroup)
                 {
                 }
-                group->set_need_check(true);
+                group->set_need_check(true); // 设置需要检查标志
             }
         }
     }
@@ -362,9 +395,9 @@ std::vector<SketchLinePtr> GeoData::add_line(const nous::vec3& p0, const nous::v
     // 新line
     for(int i = 1; i < new_line_points.size(); ++i)
     {
-        SketchLinePtr cl = _add_nous_line(new_line_points[i], new_line_points[i - 1]);
-        new_lines.push_back(cl);
-        GeoDataTopoOperations::get().check_path_and_split_sketch_polygon(this, cl);
+        SketchLinePtr cl = _add_nous_line(new_line_points[i], new_line_points[i - 1]); // 添加新线段
+        new_lines.push_back(cl); // 将新线段添加到结果集中
+        GeoDataTopoOperations::get().check_path_and_split_sketch_polygon(this, cl); // 检查路径并分割多边形
         if(genPolygon)
         {
             auto ring_contain_target_part = [this](const nous::vec3& normal, const std::vector<SketchPointPtr>& target,
@@ -386,7 +419,7 @@ std::vector<SketchLinePtr> GeoData::add_line(const nous::vec3& p0, const nous::v
                 return false;
             };
 
-            this->_sync_nous();
+            this->_sync_nous(); // 同步数据
             std::map<size_t, std::vector<SketchPointPtr>> allRings;
 
             nous::vec3 pos0 = m_nous_position_handle.get(cl->p0->point->idx());
@@ -404,7 +437,7 @@ std::vector<SketchLinePtr> GeoData::add_line(const nous::vec3& p0, const nous::v
             visited.insert(cl->p1);
             uint8_t mode = 0x3;
             std::vector<std::pair<nous::vec3, std::vector<std::vector<SketchPointPtr>>>> coplane_rings;
-            _find_coplain_rings(cl->p1, cl->p0, path, visited, normal, dir, mode, coplane_rings);
+            _find_coplain_rings(cl->p1, cl->p0, path, visited, normal, dir, mode, coplane_rings); // 查找共面环
             // 共面环，检测是否重叠
             for(auto& rings: coplane_rings)
             {
@@ -448,17 +481,18 @@ std::vector<SketchLinePtr> GeoData::add_line(const nous::vec3& p0, const nous::v
         }
     }
 
-    m_dirty_flags |= 0x1;
-    m_dirty_flags |= 0x2;
+    m_dirty_flags |= 0x1; // 设置脏标志
+    m_dirty_flags |= 0x2; // 设置脏标志
 
-    return new_lines;
+    return new_lines; // 返回新添加的线段
 }
 
 SketchLinePtr GeoData::add_line_without_check(SketchPointPtr p0, SketchPointPtr p1) { return this->_add_nous_line(p0, p1); }
 
+// 函数功能：删除指定的线段，并根据需要合并相邻的线段和多边形
 void GeoData::delete_line(SketchLinePtr line, bool merge_adj_line, bool merge_adj_polygon, std::unordered_set<SketchPointPtr>* force_keeped_point_set)
 {
-    // ring
+    // 处理与线段相邻的环
     std::vector<std::pair<SketchRingPtr, SketchRingPtr>> coplane_ring;
     std::unordered_set<SketchRingPtr> used_prim_set;
     std::unordered_set<SketchRingPtr> line_adj_rings = get_line_adj_rings(line);
@@ -501,13 +535,15 @@ void GeoData::delete_line(SketchLinePtr line, bool merge_adj_line, bool merge_ad
     }
     used_prim_set.clear();
 
+    // 合并共面的环和多边形
     GeoDataTopoOperations::get().merge_coplane_ring_and_polygon(this, coplane_ring, merge_adj_polygon);
 
-    // line
+    // 删除线段
     SketchPointPtr p0 = line->p0;
     SketchPointPtr p1 = line->p1;
     this->_delete_nous_line(line);
 
+    // 合并相邻的线段
     if(merge_adj_line)
     {
         if(!force_keeped_point_set || (force_keeped_point_set && force_keeped_point_set->find(p0) == force_keeped_point_set->end()))
@@ -521,6 +557,7 @@ void GeoData::delete_line(SketchLinePtr line, bool merge_adj_line, bool merge_ad
         }
     }
 
+    // 删除没有顶点的点
     if(!p0->point->vertex_ptr())
     {
         m_nousptr_points.erase(p0->point);
@@ -533,55 +570,62 @@ void GeoData::delete_line(SketchLinePtr line, bool merge_adj_line, bool merge_ad
         m_nous_mesh->delete_point(p1->point->idx());
     }
 
+    // 设置脏标志
     m_dirty_flags |= 0x1;
     m_dirty_flags |= 0x2;
 }
 
 void GeoData::delete_lines(const std::unordered_set<SketchLinePtr>& lines, bool mergeAdjLine, bool mergeAdjRing)
 {
-    std::unordered_set<SketchPointPtr> points;
+    // 函数功能：删除给定的线段集合，并根据需要合并相邻的线段和环
+    std::unordered_set<SketchPointPtr> points; // 创建一个空的unordered_set用于存储线段的端点
     for(auto line: lines)
     {
-        points.insert(line->p0);
-        points.insert(line->p1);
-        this->delete_line(line, false, mergeAdjRing);
+        points.insert(line->p0); // 将线段的起点插入到points集合中
+        points.insert(line->p1); // 将线段的终点插入到points集合中
+        this->delete_line(line, false, mergeAdjRing); // 删除线段，并根据需要合并相邻的环
     }
 
     if(mergeAdjLine)
     {
         for(auto p: points)
         {
-            GeoDataTopoOperations::get().check_point_and_merge_line(this, p);
+            GeoDataTopoOperations::get().check_point_and_merge_line(this, p); // 检查点并合并相邻的线段
         }
     }
 }
 
+// 函数功能：将一个用内外环坐标数组表示的 polygon 尝试加入 GeoData 对象
+// @param polygon_pos 多边形的内外环坐标数组，第一个表示外环，其余表示内环
+// @return polygon 的坐标加入 GeoData 后在其中对应的 Point*
 std::vector<std::vector<SketchPointPtr>> GeoData::add_polygon(const std::vector<std::vector<nous::pos_t>>& polygon_pos)
 {
     // polygon split line，保证point/line/ring的拓扑正确，返回新的polygon拓扑。
-    std::unordered_set<SketchPointPtr> recreat_line_points;
-    std::vector<std::vector<SketchPointPtr>> polygon_pt_arr;
+    std::unordered_set<SketchPointPtr> recreat_line_points; // 存储需要重新创建的线段的点
+    std::vector<std::vector<SketchPointPtr>> polygon_pt_arr; // 存储多边形的点
+
+    // 遍历多边形的每个环
     for(const auto& ring: polygon_pos)
     {
-        std::vector<SketchPointPtr>& ring_pt_arr = polygon_pt_arr.emplace_back();
+        std::vector<SketchPointPtr>& ring_pt_arr = polygon_pt_arr.emplace_back(); // 为当前环创建一个新的点数组
         for(int i = 0; i < ring.size(); ++i)
         {
-            nous::pos_t p0 = ring[i];
-            nous::pos_t p1 = ring[(i + 1) % ring.size()];
+            nous::pos_t p0 = ring[i]; // 当前点
+            nous::pos_t p1 = ring[(i + 1) % ring.size()]; // 下一个点
 
-            std::vector<SketchPointPtr> new_line_points;
-            std::map<SketchLinePtr, std::vector<SketchPointPtr>> recreat_line;
-            _add_line(p0, p1, recreat_line, new_line_points);
+            std::vector<SketchPointPtr> new_line_points; // 存储新线段的点
+            std::map<SketchLinePtr, std::vector<SketchPointPtr>> recreat_line; // 存储需要重新创建的线段及其点
+            _add_line(p0, p1, recreat_line, new_line_points); // 添加线段并获取需要重新创建的线段及其点
 
             // 旧line
             for(auto& rl: recreat_line)
             {
-                GeoDataTopoOperations::get().replace_line(this, rl.first, rl.second);
+                GeoDataTopoOperations::get().replace_line(this, rl.first, rl.second); // 替换旧线段
             }
             // 查找标记被影响的组
             // 焊接组需要强制分割点的原因：部分与端点相交的焊接组，虽然拓扑不变，但依然需要被分割。
             // for(auto point: new_line_points)
-            //{
+            // {
             //     for(auto adj_line: this->get_point_adj_lines(point))
             //     {
             //         ElementGroupPtr group = adj_line->group();
@@ -594,33 +638,36 @@ std::vector<std::vector<SketchPointPtr>> GeoData::add_polygon(const std::vector<
             //         }
             //     }
             // }
-            //  新line
+            // 新line
             if(new_line_points.size())
             {
                 for(int i = 0; i < new_line_points.size() - 1; ++i)
                 {
-                    recreat_line_points.insert(new_line_points[i]);
-                    ring_pt_arr.push_back(new_line_points[i]);
-                    auto& cl = _add_nous_line(new_line_points[i], new_line_points[i + 1]);
+                    recreat_line_points.insert(new_line_points[i]); // 插入需要重新创建的线段的点
+                    ring_pt_arr.push_back(new_line_points[i]); // 将新线段的点添加到当前环的点数组中
+                    auto& cl = _add_nous_line(new_line_points[i], new_line_points[i + 1]); // 添加新线段
                 }
-                recreat_line_points.insert(new_line_points.back());
+                recreat_line_points.insert(new_line_points.back()); // 插入需要重新创建的线段的最后一个点
             }
         }
     }
-    nous::vec3 normal = sketch_math::ring_normal(polygon_pos[0]);
+    nous::vec3 normal = sketch_math::ring_normal(polygon_pos[0]); // 计算多边形的法线
 
-    this->add_polygon(polygon_pt_arr, normal);
+    this->add_polygon(polygon_pt_arr, normal); // 添加多边形
 
-    return polygon_pt_arr;
+    return polygon_pt_arr; // 返回多边形的点数组
 }
 
 void GeoData::add_polygon(const std::vector<std::vector<SketchPointPtr>>& polygon, nous::vec3 normal)
 {
-    std::unordered_set<SketchPolygonPtr> coplane_polygons;
-    std::unordered_set<SketchRingPtr> coplane_rings;
-    nous::vec3 pos = this->get_point_position(polygon[0][0]);
+    // 函数功能：将一个多边形添加到GeoData对象中，并处理与现有多边形的共面关系
+    std::unordered_set<SketchPolygonPtr> coplane_polygons; // 存储共面的多边形
+    std::unordered_set<SketchRingPtr> coplane_rings; // 存储共面的环
+    nous::vec3 pos = this->get_point_position(polygon[0][0]); // 获取多边形第一个点的位置
 
+    // 获取当前多边形的包围盒
     nous::AABB3 current_polygon_aabb3 = GeoDataUtils::get().get_aabb3(this, polygon[0]);
+    // 查找与当前多边形相交的环
     std::unordered_set<SketchRingPtr> intersect_rings = m_ring_tree->search(current_polygon_aabb3);
     for(const auto& ring: intersect_rings)
     {
@@ -629,18 +676,19 @@ void GeoData::add_polygon(const std::vector<std::vector<SketchPointPtr>>& polygo
         {
             const nous::vec3 ring_normal = polygon->normal;
             const nous::pos_t ring_pos = get_point_position(m_nousptr_points.at(ring->ring_prim->vertex_ptr()->point_ptr()));
-            // 如果环与输入的 polygon 不共面，可以跳过运算
+            // 如果环与输入的多边形不共面，可以跳过运算
             if(!sketch_math::plane_coplane_plane(ring_normal, ring_pos, normal, pos))
             {
                 continue;
             }
 
-            coplane_polygons.insert(polygon);
-            coplane_rings.insert(polygon->ring);
-            coplane_rings.insert(polygon->inner_rings.begin(), polygon->inner_rings.end());
+            coplane_polygons.insert(polygon); // 插入共面的多边形
+            coplane_rings.insert(polygon->ring); // 插入共面的外环
+            coplane_rings.insert(polygon->inner_rings.begin(), polygon->inner_rings.end()); // 插入共面的内环
         }
     }
 
+    // 处理与现有多边形的相交情况
     std::map<SketchPolygonPtr, std::vector<std::vector<std::vector<SketchPointPtr>>>> recreate_polygons;
     std::vector<std::vector<std::vector<SketchPointPtr>>> new_polygons;
     geodata_topo::split_intersect_polygons(this, polygon, normal, coplane_polygons, recreate_polygons, new_polygons);
@@ -654,7 +702,7 @@ void GeoData::add_polygon(const std::vector<std::vector<SketchPointPtr>>& polygo
         coplane_rings_topo[GeoData::ring_key(ring_topo)] = std::move(ring_topo);
     }
     auto split_polygon_inner_ring = [&](std::vector<std::vector<SketchPointPtr>>& polygon, std::vector<std::vector<SketchPointPtr>>& result_polygon) {
-        result_polygon.emplace_back(std::move(polygon[0]));
+        result_polygon.emplace_back(std::move(polygon[0])); // 插入外环
         if(polygon.size() > 1)
         {
             // 判断内环是否可分裂
@@ -694,9 +742,9 @@ void GeoData::add_polygon(const std::vector<std::vector<SketchPointPtr>>& polygo
                         result_polygon.emplace_back(std::move(ring));
                     }
                 }
-                else// 该内环存在，为最小环
+                else // 该内环存在，为最小环
                 {
-                    coplane_rings_topo.erase(crk);// 同时该环也不可能为其他子环的子环
+                    coplane_rings_topo.erase(crk); // 同时该环也不可能为其他子环的子环
                     result_polygon.emplace_back(std::move(current_inner_ring));
                 }
             }
@@ -722,55 +770,54 @@ void GeoData::add_polygon(const std::vector<std::vector<SketchPointPtr>>& polygo
         split_polygon_inner_ring(new_polygon, polygon);
         this->add_polygon_without_check(polygon);
     }
-
-    // std::unordered_set<size_t> recreat_lines;
-    // for(auto point: recreat_line_points)
-    //{
-    //     this->get_point_adj_lines(point, recreat_lines);
-    // }
-    // for(auto lk: recreat_lines)
-    //{
-    //     auto line_pos = m_key_lines.find(lk);
-    //     if(line_pos != m_key_lines.end())
-    //     {
-    //         GeoDataTopoOperations::get().check_path_and_split_sketch_polygon(this, m_key_lines.at(lk));
-    //     }
-    // }
 }
 
+// 函数功能：将一个用内外环坐标数组表示的 polygon 尝试加入 GeoData 对象，不进行重复检查
 std::vector<std::vector<SketchPointPtr>> GeoData::add_polygon_without_check(const std::vector<std::vector<nous::pos_t>>& polygon_pos,
                                                                             const bool add_line)
 {
+    // 创建一个存储多边形点的二维数组
     std::vector<std::vector<SketchPointPtr>> polygon_pt_arr;
+    // 遍历多边形的每个环
     for(auto& ring: polygon_pos)
     {
+        // 为当前环创建一个新的点数组
         auto& ring_pt_arr = polygon_pt_arr.emplace_back();
+        // 遍历环中的每个点
         for(auto& pos: ring)
         {
+            // 添加点到GeoData对象中，不进行重复检查
             SketchPointPtr new_point = add_point_without_check(pos);
+            // 将新点添加到当前环的点数组中
             ring_pt_arr.emplace_back(new_point);
         }
     }
 
+    // 将多边形添加到GeoData对象中，不进行重复检查
     this->add_polygon_without_check(polygon_pt_arr, add_line);
+    // 返回多边形的点数组
     return polygon_pt_arr;
 }
 
+// 函数功能：将一个用内外环点数组表示的多边形添加到GeoData对象中，不进行重复检查
 SketchPolygonPtr GeoData::add_polygon_without_check(const std::vector<std::vector<SketchPointPtr>>& polygon, bool add_line)
 {
+    // 如果需要添加线段
     if(add_line)
     {
+        // 遍历多边形的每个环
         for(const auto ring_pts: polygon)
         {
+            // 遍历环中的每个点
             for(int i = 0; i < ring_pts.size(); ++i)
             {
-                SketchPointPtr prev_pt = ring_pts[i];
-                SketchPointPtr next_pt = ring_pts[(i + 1) % ring_pts.size()];
-                add_line_without_check(prev_pt, next_pt);
+                SketchPointPtr prev_pt = ring_pts[i]; // 当前点
+                SketchPointPtr next_pt = ring_pts[(i + 1) % ring_pts.size()]; // 下一个点
+                add_line_without_check(prev_pt, next_pt); // 添加线段
             }
         }
     }
-    return _create_polygon(polygon);
+    return _create_polygon(polygon); // 创建多边形
 }
 
 void GeoData::delete_polygon(SketchPolygonPtr polygon, bool need_delete_line, bool need_merge_line,

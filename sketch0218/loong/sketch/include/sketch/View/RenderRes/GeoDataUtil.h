@@ -72,6 +72,11 @@ public:
     std::vector<std::vector<size_t>> convert_polygon_to_rel_point_idx(GeoData* geodata, SketchPolygonPtr polygon,
                                                                       std::vector<SketchPointPtr>& id_point_map);
 
+    // add
+    // 检测目标多边形是否完全被另一个多边形包含
+    bool is_polygon_contained(GeoData* geodata, const std::vector<std::vector<nous::vec3>>& target_polygon, SketchPolygonPtr container_polygon);
+    // add
+
 private:
     GeoDataUtils() = default;
 
